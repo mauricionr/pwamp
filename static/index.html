@@ -21,6 +21,7 @@ limitations under the License.
     <title>AMPPAREL</title>
     <link rel="canonical" href="amps.html">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet" type="text/css">
     <style amp-boilerplate>
         body {
             -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
@@ -470,34 +471,10 @@ limitations under the License.
             background-color: white;
         }
         
-        amp-lightbox .lightbox #header {
-            padding: 0;
-            height: 40px;
-        }
-        
-        amp-lightbox input[type="search"] {
+        amp-lightbox input[type="text"] {
             width: 90%;
             float: left;
-            height: 40px;
-        }
-        
-        amp-lightbox .search {
-            margin-top: 8px;
-            margin-right: 5px;
-        }
-        
-        amp-lightbox .list-item p {
-            display: inline-block;
-            margin: 0;
-        }
-        
-        .list-overflow[overflow] {
-            position: absolute;
-            bottom: 0;
-        }
-        
-        amp-lightbox amp-list {
-            overflow: scroll!important;
+            padding: 10px;
         }
     </style>
 </head>
@@ -545,13 +522,11 @@ limitations under the License.
             }
         </script>
     </amp-state>
-
     <amp-state id="selected">
         <script type="application/json">
             {
                 "slide": 0,
-                "sku": "1001",
-                "query": ""
+                "sku": "1001"
             }
         </script>
     </amp-state>
@@ -562,9 +537,6 @@ limitations under the License.
             }
         </script>
     </amp-state>
-
-
-
     <amp-state id="results" [src]="'/search/?q=' + query.term">
         <script type="application/json">
             {
@@ -651,33 +623,42 @@ limitations under the License.
     </amp-sidebar>
 
     <amp-lightbox id="my-lightbox" layout="nodisplay">
-        <div class="lightbox">
-            <header id="header" class="mdl-color--black mdl-color-text--white">
-                <input type="text" on="input-debounced:AMP.setState({query: {term: event.value}})" id="search_input" placeholder="Search..." name="search">
-                <amp-img role="button" on="tap:AMP.setState({query: {term: search_input.value}})" class="search" tabindex="0" src="./img/ic_search_white_24dp_1x.png" width=24 height=24></amp-img>
-            </header>
+        <form method="post" action-xhr="/search" target="_blank" id="search-form" on="submit:autosuggest_list.hide;submit-success:search_results.show">
+            <div class="lightbox">
+                <header id="header" class="mdl-color--black mdl-color-text--white">
+                    <amp-img role="button" class="menu" on="tap:sidebar.toggle" tabindex="0" src="./img/ic_menu_white_24dp_1x.png" width=24 height=24></amp-img>
+                    <span class="mdl-color-text--blue">AMP</span>PAREL
+                    <amp-img role="button" class="search" on="tap:my-lightbox" tabindex="0" src="./img/ic_search_white_24dp_1x.png" width=24 height=24></amp-img>
+                </header>
 
-            <amp-list src="/search" [src]="'/search?q=' + query.term" width="300" height="1000" layout="responsive">
-                <template type="amp-mustache">
-                      <p [text]="query.term"></p>
+                <header id="header" class="mdl-color--black mdl-color-text--white">
+                    <input type="text" name="query" on="input-debounced:AMP.setState({query: {term: event.value}})" id="search_input" placeholder="Search..." name="search">
+                </header>
+
+                <amp-list submit-success id="search_results" src="/search" [src]="'/search?q=' + query.term" width="300" height="1000" layout="responsive">
+                    <template type="amp-mustache">
                       <div class="list-item">
                         <amp-img role="button" src="{{picture}}" tabindex="0" width="50" height="50"></amp-img>
-                        <p>
-                          {{company}}
-                        </p>
-                        <p>
-                          {{about}}
-                        </p>
-                        <p>
-                          {{name.first}} {{name.last}}
-                        </p>
+                            {{company}}
+                            {{name.first}} {{name.last}}
                       </div>
                   </template>
-                <div overflow role=button aria-label="Show more" class="list-overflow">
-                    Show more
-                </div>
-            </amp-list>
-        </div>
+                </amp-list>
+
+                <amp-list id="auto_sugest" src="/search" [src]="'/search?q=' + query.term" width="300" height="1000" layout="responsive">
+                    <template type="amp-mustache">
+                      <div class="list-item">
+                        <amp-img role="button" src="{{picture}}" tabindex="0" width="50" height="50"></amp-img>
+                            {{company}}
+                            {{name.first}} {{name.last}}
+                      </div>
+                  </template>
+                    <div overflow role=button aria-label="Show more" class="list-overflow">
+                        Show more
+                    </div>
+                </amp-list>
+            </div>
+        </form>
     </amp-lightbox>
 
     <header id="header" class="mdl-color--black mdl-color-text--white">
