@@ -17,7 +17,6 @@ app.get('/search', function(req, res) {
     } else {
         data.items = require('./data/data.js').items;
     }
-
     res.status(200).json(data);
 })
 

@@ -471,7 +471,8 @@ limitations under the License.
             background-color: white;
         }
         
-        amp-lightbox input[type="text"] {
+        amp-lightbox input[type="text"],
+        amp-lightbox input[type="search"] {
             width: 90%;
             float: left;
             padding: 10px;
@@ -632,7 +633,7 @@ limitations under the License.
                 </header>
 
                 <header id="header" class="mdl-color--black mdl-color-text--white">
-                    <input type="text" name="query" on="input-debounced:AMP.setState({query: {term: event.value}})" id="search_input" placeholder="Search..." name="search">
+                    <input type="search" name="query" on="input-debounced:AMP.setState({query: {term: event.value}})" id="search_input" placeholder="Search..." name="search">
                 </header>
 
                 <amp-list submit-success id="search_results" src="/search" [src]="'/search?q=' + query.term" width="300" height="1000" layout="responsive">
