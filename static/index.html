@@ -81,6 +81,12 @@ limitations under the License.
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
     <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>
+    <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
+    <script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>
+    <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
+    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+    <script async custom-element="amp-fit-text" src="https://cdn.ampproject.org/v0/amp-fit-text-0.1.js"></script>
+
 
     <style amp-custom>
         /*** uncss> filename: https://code.getmdl.io/1.3.0/material.indigo-pink.min.css ***/
@@ -456,6 +462,43 @@ limitations under the License.
         .hidden {
             display: none;
         }
+        
+        amp-lightbox .lightbox {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background-color: white;
+        }
+        
+        amp-lightbox .lightbox #header {
+            padding: 0;
+            height: 40px;
+        }
+        
+        amp-lightbox input[type="search"] {
+            width: 90%;
+            float: left;
+            height: 40px;
+        }
+        
+        amp-lightbox .search {
+            margin-top: 8px;
+            margin-right: 5px;
+        }
+        
+        amp-lightbox .list-item p {
+            display: inline-block;
+            margin: 0;
+        }
+        
+        .list-overflow[overflow] {
+            position: absolute;
+            bottom: 0;
+        }
+        
+        amp-lightbox amp-list {
+            overflow: scroll!important;
+        }
     </style>
 </head>
 
@@ -507,15 +550,140 @@ limitations under the License.
         <script type="application/json">
             {
                 "slide": 0,
-                "sku": "1001"
+                "sku": "1001",
+                "query": ""
+            }
+        </script>
+    </amp-state>
+    <amp-state id="query">
+        <script type="application/json">
+            {
+                "term": ""
             }
         </script>
     </amp-state>
 
+
+
+    <amp-state id="results" [src]="'/search/?q=' + query.term">
+        <script type="application/json">
+            {
+                "items": [{
+                    "_id": "594ec1ff98a0c7db5e16986c",
+                    "index": 1,
+                    "guid": "74f4e0d7-420d-49a8-b206-5ac02ca47134",
+                    "isActive": false,
+                    "balance": "$2,813.65",
+                    "picture": "http://placehold.it/32x32",
+                    "age": 36,
+                    "eyeColor": "green",
+                    "name": {
+                        "first": "Montoya",
+                        "last": "Stephenson"
+                    },
+                    "company": "LOTRON",
+                    "email": "montoya.stephenson@lotron.me",
+                    "phone": "+1 (922) 515-2674",
+                    "address": "900 Barlow Drive, Chelsea, Missouri, 2824",
+                    "about": "Ullamco ut minim cupidatat esse occaecat amet. Voluptate anim amet dolor consequat nulla pariatur adipisicing laboris ipsum amet. Nisi et mollit nostrud consequat labore do adipisicing magna cillum magna ad amet. Laboris duis velit ipsum id elit magna. Eu proident laborum excepteur occaecat. Ea adipisicing est consectetur ipsum. Sint do do fugiat ut laboris Lorem quis velit qui et laboris irure.",
+                    "registered": "Tuesday, June 6, 2017 2:08 AM",
+                    "latitude": "5.85088",
+                    "longitude": "61.028106",
+                    "tags": [
+                        "aute",
+                        "quis",
+                        "anim",
+                        "excepteur",
+                        "elit"
+                    ],
+                    "range": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9
+                    ],
+                    "friends": [{
+                        "id": 0,
+                        "name": "Darla Webster"
+                    }, {
+                        "id": 1,
+                        "name": "Hanson Fields"
+                    }, {
+                        "id": 2,
+                        "name": "Blackburn Wynn"
+                    }],
+                    "greeting": "Hello, Montoya! You have 8 unread messages.",
+                    "favoriteFruit": "strawberry"
+                }]
+            }
+        </script>
+    </amp-state>
+
+    <amp-sidebar id="sidebar" layout="nodisplay" side="left">
+        <amp-img role="button" class="amp-close-image" src="/img/ic_close_black_18dp_2x.png" width="20" height="20" alt="close sidebar" on="tap:sidebar.close" tabindex="0"></amp-img>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li> Nav item 1</li>
+            <li>
+                <amp-fit-text width="220" height="20" layout="responsive" max-font-size="24">
+                    Nav item 2 - &lt;amp-fit-text&gt;
+                </amp-fit-text>
+            </li>
+            <li>
+                <amp-fit-text width="220" height="20" layout="responsive" max-font-size="24">
+                    Nav item 3 - &lt;amp-fit-text&gt; longer text
+                </amp-fit-text>
+            </li>
+            <li> Nav item 4 - Image
+                <amp-img role="button" class="amp-sidebar-image" src="/img/favicon.png" tabindex="0" width="20" height="20" alt="an image"></amp-img>
+            </li>
+            <li> Nav item 5</li>
+            <li> Nav item 6</li>
+        </ul>
+    </amp-sidebar>
+
+    <amp-lightbox id="my-lightbox" layout="nodisplay">
+        <div class="lightbox">
+            <header id="header" class="mdl-color--black mdl-color-text--white">
+                <input type="text" on="input-debounced:AMP.setState({query: {term: event.value}})" id="search_input" placeholder="Search..." name="search">
+                <amp-img role="button" on="tap:AMP.setState({query: {term: search_input.value}})" class="search" tabindex="0" src="./img/ic_search_white_24dp_1x.png" width=24 height=24></amp-img>
+            </header>
+
+            <amp-list src="/search" [src]="'/search?q=' + query.term" width="300" height="1000" layout="responsive">
+                <template type="amp-mustache">
+                      <p [text]="query.term"></p>
+                      <div class="list-item">
+                        <amp-img role="button" src="{{picture}}" tabindex="0" width="50" height="50"></amp-img>
+                        <p>
+                          {{company}}
+                        </p>
+                        <p>
+                          {{about}}
+                        </p>
+                        <p>
+                          {{name.first}} {{name.last}}
+                        </p>
+                      </div>
+                  </template>
+                <div overflow role=button aria-label="Show more" class="list-overflow">
+                    Show more
+                </div>
+            </amp-list>
+        </div>
+    </amp-lightbox>
+
     <header id="header" class="mdl-color--black mdl-color-text--white">
-        <amp-img class="menu" src="./img/ic_menu_white_24dp_1x.png" width=24 height=24></amp-img>
+        <amp-img role="button" class="menu" on="tap:sidebar.toggle" tabindex="0" src="./img/ic_menu_white_24dp_1x.png" width=24 height=24></amp-img>
         <span class="mdl-color-text--blue">AMP</span>PAREL
-        <amp-img class="search" src="./img/ic_search_white_24dp_1x.png" width=24 height=24></amp-img>
+        <amp-img role="button" class="search" on="tap:my-lightbox" tabindex="0" src="./img/ic_search_white_24dp_1x.png" width=24 height=24></amp-img>
     </header>
 
     <div id="container">
@@ -523,10 +691,9 @@ limitations under the License.
         <h6 class="rating"><span class="mdl-color-text--red">★★★★☆</span> <span class="mdl-color-text--grey">(14)</span></h6>
 
         <amp-carousel type="slides" layout="fixed-height" height=250 id="carousel" on="slideChange:AMP.setState({selected: {slide: event.index}})">
-            <!-- Update the `src` of each <amp-img> when the `selected.sku` variable changes. -->
-            <amp-img width=200 height=250 src="./shirts/black.jpg" [src]="shirts[selected.sku].image"></amp-img>
-            <amp-img width=300 height=375 src="./shirts/black.jpg" [src]="shirts[selected.sku].image"></amp-img>
-            <amp-img width=400 height=500 src="./shirts/black.jpg" [src]="shirts[selected.sku].image"></amp-img>
+            <amp-img role="button" tabindex="0" width=200 height=250 src="./shirts/black.jpg" [src]="shirts[selected.sku].image"></amp-img>
+            <amp-img role="button" tabindex="0" width=300 height=375 src="./shirts/black.jpg" [src]="shirts[selected.sku].image"></amp-img>
+            <amp-img role="button" tabindex="0" width=400 height=500 src="./shirts/black.jpg" [src]="shirts[selected.sku].image"></amp-img>
         </amp-carousel>
 
         <!-- The <span> element corresponding to the current displayed slide
@@ -549,30 +716,30 @@ limitations under the License.
                     <table>
                         <tr>
                             <td>
-                                <amp-img width=40 height=40 option="1001" src="./shirts/swatch/black.jpg" selected></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1001" src="./shirts/swatch/black.jpg" selected></amp-img>
                             </td>
                             <td>
-                                <amp-img width=40 height=40 option="1002" src="./shirts/swatch/blue.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1002" src="./shirts/swatch/blue.jpg"></amp-img>
                             </td>
                             <td>
-                                <amp-img width=40 height=40 option="1010" src="./shirts/swatch/brown.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1010" src="./shirts/swatch/brown.jpg"></amp-img>
                             </td>
                             <td>
-                                <amp-img width=40 height=40 option="1014" src="./shirts/swatch/dark-green.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1014" src="./shirts/swatch/dark-green.jpg"></amp-img>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <amp-img width=40 height=40 option="1015" src="./shirts/swatch/gray.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1015" src="./shirts/swatch/gray.jpg"></amp-img>
                             </td>
                             <td>
-                                <amp-img width=40 height=40 option="1016" src="./shirts/swatch/light-gray.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1016" src="./shirts/swatch/light-gray.jpg"></amp-img>
                             </td>
                             <td>
-                                <amp-img width=40 height=40 option="1021" src="./shirts/swatch/navy.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1021" src="./shirts/swatch/navy.jpg"></amp-img>
                             </td>
                             <td>
-                                <amp-img width=40 height=40 option="1030" src="./shirts/swatch/wine.jpg"></amp-img>
+                                <amp-img tabindex="0" role="button" width=40 height=40 option="1030" src="./shirts/swatch/wine.jpg"></amp-img>
                             </td>
                         </tr>
                     </table>
